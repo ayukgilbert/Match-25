@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Match du 25</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #25D366; }
+        label { display: block; margin-top: 12px; font-weight: bold; }
+        input, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        .radio-group { display: flex; gap: 15px; margin-top: 5px; }
+        button { width: 100%; padding: 12px; margin-top: 20px; background: #25D366; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:hover { background: #1da851; }
+        #contributionDiv { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Inscription Match du 25 Avril</h2>
+        <form id="matchForm">
+            <label>Nom complet</label>
+            <input type="text" name="nom" required>
+
+            <label>Numéro WhatsApp</label>
+            <input type="tel" name="whatsapp" placeholder="+237..." required>
+
+            <label>Statut matrimonial</label>
+            <select name="statut" required>
+                <option value="">Choisir...</option>
+                <option>Célibataire</option>
+                <option>Marié(e)</option>
+                <option>Divorcé(e)</option>
+                <option>Veuf/Veuve</option>
+            </select>
+
+            <label>Région d'origine</label>
+            <input type="text" name="region" required>
+
+            <label>Ton nom de star</label>
+            <input type="text" name="star_name" placeholder="Ex: Sadio Mane" required>
+
+            <label>Poste sur le terrain</label>
+            <select name="poste" required>
+                <option value="">Choisir...</option>
+                <option>Gardien</option>
+                <option>Défenseur</option>
+                <option>Milieu</option>
+                <option>Attaquant</option>
+                <option>Remplaçant</option>
+            </select>
+
+            <label>Tu participes au match du 25 ?</label>
+            <div class="radio-group">
+                <label><input type="radio" name="participe" value="Oui" required> Oui</label>
+                <label><input type="radio" name="participe" value="Non"> Non</label>
+            </div>
+
+            <div id="contributionDiv">
+                <label>Combien tu contribues ? FCFA</label>
+                <input type="number" name="contribution" min="0" placeholder="Ex: 2000">
+            </div>
+
+            <button type="submit">Envoyer ma réponse</button>
+        </form>
+    </div>
+
+    <script>
+        const participeInputs = document.querySelectorAll('input[name="participe"]');
+        const contributionDiv = document.getElementById('contributionDiv');
+        const contributionInput = document.querySelector('input[name="contribution"]');
+
+        participeInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.value === 'Oui') {
+                    contributionDiv.style.display = 'block';
+                    contributionInput.required = true;
+                } else {
+                    contributionDiv.style.display = 'none';
+                    contributionInput.required = false;
+                    contributionInput.value = '';
+                }
+            });
+        });
+
+        document.getElementById('matchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci ! Ta réponse a été enregistrée.');
+            // Ici tu branches vers Google Sheets, Formspree, ou ton email
+            this.reset();
+            contributionDiv.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
